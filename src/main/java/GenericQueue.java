@@ -9,6 +9,13 @@ public class GenericQueue<T> extends GenericList<T>{
         tail = head;
     }
 
+    public GenericQueue(T val, int code) {
+        Node<T> head = new Node<>(val, code);
+        this.setHead(head);
+        this.setLength(1);
+        tail = head;
+    }
+
     @Override
     public void add(T data) {
         Node<T> elem = new Node<>(data);

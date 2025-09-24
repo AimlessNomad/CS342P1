@@ -17,12 +17,11 @@ public class MyHashMap<T> implements Iterable<T> {
         int hash = key.hashCode();
         GenericQueue<T> queue = map.get(hash % 10);
         if(queue == null) {
-            map.set(hash % 10, new GenericQueue<>(value));
+            map.set(hash % 10, new GenericQueue<>(value, hash));
         } else {
             GenericList.Node<T> curr = queue.getHead();
             for(int i = 0; i < queue.getLength(); i++) {
                 if (curr.code == hash) {
-                    T temp = curr.data;
                     curr.data = value;
                     return;
                 }
@@ -56,10 +55,11 @@ public class MyHashMap<T> implements Iterable<T> {
 
     public T get(String key) {
         int hash = key.hashCode();
-        GenericQueue<T> queue = map.get(hash % 10);
+        GenericQueue<T> queue = map.get(Math.abs(hash % 10));
+        if(queue == null) return null;
         GenericList.Node<T> curr = queue.getHead();
 
-        for(int i = 0; i < queue.getLength(); i++) {
+        while(curr != null) {
             if(curr.code == hash) {
                 return curr.data;
             }
