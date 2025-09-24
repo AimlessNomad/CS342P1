@@ -10,6 +10,17 @@ public abstract class GenericList<T> implements Iterable<T> {
         T data;
         int code;
         Node<T> next;
+
+        public Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        public Node(T data, int code) {
+            this.data = data;
+            this.code = code;
+            this.next = null;
+        }
     }
 
     public void print() {
@@ -26,7 +37,13 @@ public abstract class GenericList<T> implements Iterable<T> {
     }
 
     public ArrayList<T> dumpList() {
-        return new ArrayList<T>();
+        ArrayList<T> list = new ArrayList<>();
+        Node<T> curr = head;
+        for(int i = 0; i < length; i++) {
+            list.add(curr.data);
+            curr = curr.next;
+        }
+        return list;
     }
 
     public T get(int index) {
@@ -58,7 +75,8 @@ public abstract class GenericList<T> implements Iterable<T> {
         return new ReverseGLLIterator<T>();
     }
 
-    public Iterator<T> Iterator() {
+    @Override
+    public Iterator<T> iterator() {
         return new GLLIterator<T>();
     }
 
