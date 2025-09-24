@@ -8,6 +8,7 @@ public class MyHashMap<T> implements Iterable<T> {
 
     public MyHashMap(String key, T value) {
         map = new ArrayList<>(10);
+        while(map.size() < 10) map.add(null);
         this.sz = 0;
         this.put(key, value);
     }
@@ -34,7 +35,9 @@ public class MyHashMap<T> implements Iterable<T> {
 
     public T replace(String key, T value) {
         int hash = key.hashCode();
-        GenericQueue<T> queue = map.get(hash % 10);
+        GenericQueue<T> queue = map.get(Math.abs(hash % 10));
+        if(queue == null) return null;
+
         GenericList.Node<T> curr = queue.getHead();
         for(int i = 0; i < queue.getLength(); i++) {
             if(curr.code == hash) {
